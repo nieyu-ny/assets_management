@@ -1,0 +1,38 @@
+package com.assets.service;
+
+import com.assets.dao.UserMapper;
+import com.assets.entity.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * Created by user on 2016/8/2.
+ */
+@Service("userService")
+public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private UserMapper userMapper;
+
+    @Override
+    public User selectUserByUserName(String userName) {
+        return userMapper.selectUserByUserName(userName);
+    }
+
+    @Override
+    public User selectByPrimaryKey(Integer id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
+    public int insert(User user) {
+        return userMapper.insert(user);
+    }
+
+    @Override
+    public List<User> selectByName(String username) {
+        return userMapper.selectByName(username);
+    }
+}

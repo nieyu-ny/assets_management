@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app
+        xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+        version="3.1">
+
+
+  <!--Web容器加载顺序ServletContext___context-param___listener___filter___servlet -->
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!-- spring mybatis springmvc-->
+  <!-- 指定Spring的配置文件 -->
+  <!-- 否则Spring会默认从WEB-INF下寻找配置文件,contextConfigLocation属性是Spring内部固定的 -->
+  <!-- 通过ContextLoaderListener的父类ContextLoader的第120行发现CONFIG_LOCATION_PARAM固定为contextConfigLocation -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:spring-*.xml</param-value>
+  </context-param>
+
+
+  <!-- 防止发生java.beans.Introspector内存泄露,应将它配置在ContextLoaderListener的前面 -->
+  <!-- 详细描述见http://blog.csdn.net/jadyer/article/details/11991457 -->
+  <listener>
+    <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+  </listener>
+  <!--<listener>-->
+    <!--<listener-class>com.coolwen.listener.AutoBackUpListener</listener-class>-->
+  <!--</listener>-->
+  <!-- 实例化Spring容器 -->
+  <!-- 应用启动时,该监听器被执行,它会读取Spring相关配置文件,其默认会到WEB-INF中查找applicationContext.xml -->
+  <!-- http://starscream.iteye.com/blog/1107036 -->
+  <!-- http://www.davenkin.me/post/2012-10-18/40039948363 -->
+  <!-- WebApplicationContextUtils.getWebApplicationContext() -->
+  <listener>
+    <description>spring监听器</description>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+
+  <!-- 解决乱码问题 -->
+  <!-- forceEncoding默认为false,此时效果可大致理解为request.setCharacterEncoding("UTF-8") -->
+  <!-- forceEncoding=true后,可大致理解为request.setCharacterEncoding("UTF-8")和response.setCharacterEncoding("UTF-8") -->
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceEncoding</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>SystemContextFilter</filter-name>
+    <filter-class>com.assets.filter.SystemContextFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SystemContextFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!--访问权限-->
+  <filter>
+    <filter-name>Loginfilter</filter-name>
+    <filter-class>com.assets.entity.LoginFilter</filter-class>
+
+  </filter>
+  <filter-mapping>
+    <filter-name>Loginfilter</filter-name>
+    <url-pattern>/student/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Loginfilter</filter-name>
+    <url-pattern>/total/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Loginfilter</filter-name>
+    <url-pattern>/expert/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Loginfilter</filter-name>
+    <url-pattern>/upload/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Loginfilter</filter-name>
+    <url-pattern>/collect/*</url-pattern>
+  </filter-mapping>
+
+
+
+  <!-- 配置SpringMVC -->
+  <servlet>
+    <servlet-name>springMVC</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <!--<param-value>WEB-INF/spring-mvc.xml</param-value>-->
+      <param-value>classpath*:spring-mvc.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>springMVC</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+
+  <!-- Session超时30分钟(零或负数表示会话永不超时) -->
+
+  <session-config>
+    <session-timeout>30</session-timeout>
+  </session-config>
+
+  <!--Druid监考打开http://localhost:8080/druid/spring.html-->
+  <servlet>
+    <servlet-name>DruidStatView</servlet-name>
+    <servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DruidStatView</servlet-name>
+    <url-pattern>/druid/*</url-pattern>
+  </servlet-mapping>
+
+  <!-- 配置session超时时间，单位分钟 -->
+
+  <!-- 默认欢迎页 -->
+  <!-- Servlet2.5中可直接在此处执行Servlet应用,如<welcome-file>servlet/InitSystemParamServlet</welcome-file> -->
+  <!-- 这里使用了SpringMVC提供的<mvc:view-controller>标签,实现了首页隐藏的目的,详见applicationContext.xml -->
+
+  <welcome-file-list>
+    <welcome-file>/index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <jsp-config>
+    <taglib>
+      <taglib-uri>el.tld</taglib-uri>
+      <taglib-location>/WEB-INF/tlds/el.tld</taglib-location>
+    </taglib>
+  </jsp-config>
+  <!--<session-config>-->
+  <!--<session-timeout>30</session-timeout>-->
+  <!--</session-config>-->
+
+
+  <error-page>
+    <error-code>405</error-code>
+    <location>/WEB-INF/405.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/404.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/WEB-INF/500.jsp</location>
+  </error-page>
+  <!--<error-page>-->
+  <!--<error-code>java.lang.Throwable</error-code>-->
+  <!--<location>/WEB-INF/500.jsp</location>-->
+  <!--</error-page>-->
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.css</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.gif</url-pattern>
+
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.jpg</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.js</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.png</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>default</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+</web-app>
