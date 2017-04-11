@@ -1,13 +1,11 @@
 package com.assets.entity;
 
-public class User {
+public class Role {
     private Integer id;
 
     private String username;
 
-    private String password;
-
-    private Integer enabled;
+    private String authority;
 
     public Integer getId() {
         return id;
@@ -25,19 +23,11 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAuthority() {
+        return authority;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Integer enabled) {
-        this.enabled = enabled;
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 }

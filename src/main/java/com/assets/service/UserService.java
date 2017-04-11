@@ -15,5 +15,4 @@ public interface UserService {
 
     int insert(User user);
 
-    List<User> selectByName(String username);
 }

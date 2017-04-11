@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.assets.dao.AssetMapper" >
+  <resultMap id="BaseResultMap" type="com.assets.entity.Asset" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="asset_name" property="assetName" jdbcType="VARCHAR" />
+    <result column="model" property="model" jdbcType="VARCHAR" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+    <result column="code" property="code" jdbcType="REAL" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="original_value" property="originalValue" jdbcType="INTEGER" />
+    <result column="acquisition_time" property="acquisitionTime" jdbcType="VARCHAR" />
+    <result column="operation" property="operation" jdbcType="VARCHAR" />
+    <result column="storage_time" property="storageTime" jdbcType="VARCHAR" />
+    <result column="actual_quantity" property="actualQuantity" jdbcType="INTEGER" />
+    <result column="use_department" property="useDepartment" jdbcType="VARCHAR" />
+    <result column="person" property="person" jdbcType="VARCHAR" />
+    <result column="region" property="region" jdbcType="VARCHAR" />
+    <result column="use_place" property="usePlace" jdbcType="VARCHAR" />
+    <result column="responsible_department" property="responsibleDepartment" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="damage_condition" property="damageCondition" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, asset_name, model, type_name, code, company, number, original_value, acquisition_time, 
+    operation, storage_time, actual_quantity, use_department, person, region, use_place, 
+    responsible_department, note, damage_condition
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_asset
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_asset
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.assets.entity.Asset" >
+    insert into t_asset (id, asset_name, model, 
+      type_name, code, company, 
+      number, original_value, acquisition_time, 
+      operation, storage_time, actual_quantity, 
+      use_department, person, region, 
+      use_place, responsible_department, note, 
+      damage_condition)
+    values (#{id,jdbcType=INTEGER}, #{assetName,jdbcType=VARCHAR}, #{model,jdbcType=VARCHAR}, 
+      #{typeName,jdbcType=VARCHAR}, #{code,jdbcType=REAL}, #{company,jdbcType=VARCHAR}, 
+      #{number,jdbcType=INTEGER}, #{originalValue,jdbcType=INTEGER}, #{acquisitionTime,jdbcType=VARCHAR}, 
+      #{operation,jdbcType=VARCHAR}, #{storageTime,jdbcType=VARCHAR}, #{actualQuantity,jdbcType=INTEGER}, 
+      #{useDepartment,jdbcType=VARCHAR}, #{person,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, 
+      #{usePlace,jdbcType=VARCHAR}, #{responsibleDepartment,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
+      #{damageCondition,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.assets.entity.Asset" >
+    insert into t_asset
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="assetName != null" >
+        asset_name,
+      </if>
+      <if test="model != null" >
+        model,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="originalValue != null" >
+        original_value,
+      </if>
+      <if test="acquisitionTime != null" >
+        acquisition_time,
+      </if>
+      <if test="operation != null" >
+        operation,
+      </if>
+      <if test="storageTime != null" >
+        storage_time,
+      </if>
+      <if test="actualQuantity != null" >
+        actual_quantity,
+      </if>
+      <if test="useDepartment != null" >
+        use_department,
+      </if>
+      <if test="person != null" >
+        person,
+      </if>
+      <if test="region != null" >
+        region,
+      </if>
+      <if test="usePlace != null" >
+        use_place,
+      </if>
+      <if test="responsibleDepartment != null" >
+        responsible_department,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="damageCondition != null" >
+        damage_condition,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="assetName != null" >
+        #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=REAL},
+      </if>
+      <if test="company != null" >
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="originalValue != null" >
+        #{originalValue,jdbcType=INTEGER},
+      </if>
+      <if test="acquisitionTime != null" >
+        #{acquisitionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="storageTime != null" >
+        #{storageTime,jdbcType=VARCHAR},
+      </if>
+      <if test="actualQuantity != null" >
+        #{actualQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="useDepartment != null" >
+        #{useDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null" >
+        #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="usePlace != null" >
+        #{usePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibleDepartment != null" >
+        #{responsibleDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="damageCondition != null" >
+        #{damageCondition,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.assets.entity.Asset" >
+    update t_asset
+    <set >
+      <if test="assetName != null" >
+        asset_name = #{assetName,jdbcType=VARCHAR},
+      </if>
+      <if test="model != null" >
+        model = #{model,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null" >
+        code = #{code,jdbcType=REAL},
+      </if>
+      <if test="company != null" >
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="originalValue != null" >
+        original_value = #{originalValue,jdbcType=INTEGER},
+      </if>
+      <if test="acquisitionTime != null" >
+        acquisition_time = #{acquisitionTime,jdbcType=VARCHAR},
+      </if>
+      <if test="operation != null" >
+        operation = #{operation,jdbcType=VARCHAR},
+      </if>
+      <if test="storageTime != null" >
+        storage_time = #{storageTime,jdbcType=VARCHAR},
+      </if>
+      <if test="actualQuantity != null" >
+        actual_quantity = #{actualQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="useDepartment != null" >
+        use_department = #{useDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="person != null" >
+        person = #{person,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null" >
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="usePlace != null" >
+        use_place = #{usePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="responsibleDepartment != null" >
+        responsible_department = #{responsibleDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="damageCondition != null" >
+        damage_condition = #{damageCondition,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.assets.entity.Asset" >
+    update t_asset
+    set asset_name = #{assetName,jdbcType=VARCHAR},
+      model = #{model,jdbcType=VARCHAR},
+      type_name = #{typeName,jdbcType=VARCHAR},
+      code = #{code,jdbcType=REAL},
+      company = #{company,jdbcType=VARCHAR},
+      number = #{number,jdbcType=INTEGER},
+      original_value = #{originalValue,jdbcType=INTEGER},
+      acquisition_time = #{acquisitionTime,jdbcType=VARCHAR},
+      operation = #{operation,jdbcType=VARCHAR},
+      storage_time = #{storageTime,jdbcType=VARCHAR},
+      actual_quantity = #{actualQuantity,jdbcType=INTEGER},
+      use_department = #{useDepartment,jdbcType=VARCHAR},
+      person = #{person,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      use_place = #{usePlace,jdbcType=VARCHAR},
+      responsible_department = #{responsibleDepartment,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      damage_condition = #{damageCondition,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
